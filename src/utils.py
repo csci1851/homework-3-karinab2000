@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 
-def plot_classification_results(X, y, model, filename, title="SVM Decision Boundary"):
+def plot_classification_results(X, y, model, kernel, filename):
     pca = PCA(n_components=2)
     X_reduced = pca.fit_transform(X)
 
@@ -17,6 +17,7 @@ def plot_classification_results(X, y, model, filename, title="SVM Decision Bound
 
     Z = model.predict(pca.inverse_transform(np.c_[xx.ravel(), yy.ravel()]))
     Z = Z.reshape(xx.shape)
+    title=f"SVM Decision Boundary for {kernel}"
     plt.contourf(xx, yy, Z, alpha=0.8)
 
     sns.scatterplot(x=X_reduced[:, 0], y=X_reduced[:, 1], hue=y, edgecolor="k", s=30)
@@ -32,8 +33,8 @@ def plot_regression_results(y_true, y_pred, filename, title="Predicted vs Actual
     plt.title(title)
     plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--')
     plt.tight_layout()
-    plt.savefig(filename)
-    plt.close()
+    #plt.savefig(filename)
+    #plt.close()
 
 
 def plot_residuals(y_true, y_pred, filename, title="Residual Plot"):
@@ -44,8 +45,8 @@ def plot_residuals(y_true, y_pred, filename, title="Residual Plot"):
     plt.ylabel("Residuals")
     plt.title(title)
     plt.tight_layout()
-    plt.savefig(filename)
-    plt.close()
+    #plt.savefig(filename)
+    #plt.close()
 
 def explore_classification_data(X: pd.DataFrame, y: pd.Series):
     print("Exploring classification dataset...")
